@@ -11,15 +11,25 @@ This project provides a lightweight and scalable backend service for converting 
 
 ## 📁 Project Structure
 ```
-/app
-├── main.py              # FastAPI app setup and router registration
-├── models.py            # Request models
-├── routes/
-│   └── nl_to_sql.py     # Main API endpoint
-├── utils/
-│   ├── schema.py        # Keyword inference + schema subset from DB
-│   ├── prompt.py        # Prompt construction for LLM
-│   └── validate.py      # SQL safety checks
+nl-to-sql-api/
+├── .env.example                  # ✅ Template for environment variables
+├── .gitignore                   # ✅ Ignore venv, logs, env files, etc.
+├── README.md                    # ✅ Project documentation
+├── requirements.txt             # ✅ Backend dependencies
+├── app/
+│   ├── main.py                  # FastAPI app setup and router registration
+│   ├── models.py                # Pydantic request model
+│   ├── routes/
+│   │   └── nl_to_sql.py         # POST /api/nl-to-sql endpoint
+│   └── utils/
+│       ├── schema.py            # Redis-backed schema subset + keyword extractor
+│       ├── prompt.py            # LLM prompt construction
+│       └── validate.py          # Basic SQL safety guardrails
+├── frontend/
+│   ├── package.json             # ✅ React + Next.js + Recharts + Axios
+│   └── pages/
+│       └── index.tsx           # ✅ NL query input + chart rendering (Recharts)
+
 ```
 
 ## 🧠 Features
