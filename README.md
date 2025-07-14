@@ -1,13 +1,13 @@
 # Natural Language to SQL with Visualization (FastAPI + MS SQL)
 
-This project provides a lightweight and scalable backend service for converting natural language queries into SQL, executing them on an MS SQL Server, and returning results along with chart configurations for visualizing.
+This project provides a lightweight and scalable full-stack app for converting natural language queries into SQL, executing them on an MS SQL Server, visualizing the result as a chart, and explaining the data in plain English.
 
 ## 🔧 Tech Stack
 - **FastAPI**: Backend API
 - **Redis**: Caching for schema and LLM responses
 - **MS SQL Server**: Primary data store
-- **In-House LLM API**: Converts NL queries to SQL + chart config
-- **Next.js + Recharts**: Frontend for UI and chart rendering
+- **In-House LLM API**: Converts NL queries to SQL + chart config + summary
+- **Next.js + Recharts**: Frontend UI for query input, data table, and chart rendering
 
 ## 📁 Project Structure
 ```
@@ -28,7 +28,7 @@ nl-to-sql-api/
 ├── frontend/
 │   ├── package.json          # Next.js + Recharts + Axios setup
 │   └── pages/
-│       └── index.tsx         # Main input and chart rendering
+│       └── index.tsx         # Main input + chart/table toggle + SQL + summary
 ```
 
 ## 🚀 Getting Started
@@ -62,22 +62,33 @@ LLM_API_URL=http://localhost:8001/generate
 ## 🧪 Sample Request
 ```json
 {
-  "query": "Show total notional per product in the last 30 days"
+  "query": "Compare unicorn counts in SF and NY over time"
 }
 ```
 
 ## 📊 Sample Response
 ```json
 {
+  "sql": "SELECT ...",
   "data": [...],
   "chartConfig": {
-    "chartType": "bar",
-    "xAxis": "product",
-    "yAxis": "total_notional",
-    "title": "Total Notional by Product"
-  }
+    "chartType": "line",
+    "xAxis": "year",
+    "yAxis": "unicorn_count",
+    "title": "Unicorn Count in SF vs NY"
+  },
+  "summary": "San Francisco generally has a higher unicorn count compared to New York..."
 }
 ```
+
+## ✨ Features
+- Natural language to SQL conversion using in-house LLM
+- Schema subsetting and Redis caching to reduce hallucinations
+- Safe SQL validation (only SELECTs allowed)
+- Chart + Table toggle in frontend
+- Natural language summary generated from results
+- SQL query display for transparency
+- Recharts integration for interactive graphs
 
 ---
 Feel free to fork, adapt to your schema, and extend visual options!
