@@ -1,6 +1,6 @@
 # utils/prompt.py
 
-def format_prompt(nl_query, schema_subset):
+def build_sql_prompt(nl_query: str, schema_subset: list[tuple[str, str]]) -> str:
     table_map = {}
     for table, column in schema_subset:
         table_map.setdefault(table, []).append(column)
@@ -37,4 +37,16 @@ Schema:
 {examples}
 
 User query: {nl_query}
+"""
+
+def build_summary_prompt(user_query: str, rows: list[dict]) -> str:
+    preview = "\n".join([str(row) for row in rows[:10]])  # Limit preview
+    return f"""
+You are a data analyst. Based on the question:
+"{user_query}"
+
+And the following tabular data:
+{preview}
+
+Summarize the main insight from this data in 1 paragraph of plain English.
 """
